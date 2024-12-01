@@ -2,7 +2,7 @@ package calculator.delimiter
 
 import calculator.GlobalException
 
-abstract class AbstractDelimiter :Delimiter {
+sealed class AbstractDelimiter :Delimiter {
     private fun validate(input: String){
         require(input.isNotBlank()) { GlobalException.BLANK_NOT_ALLOWED.message()}
     }
