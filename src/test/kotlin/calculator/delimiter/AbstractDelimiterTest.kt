@@ -27,7 +27,7 @@ class AbstractDelimiterTest {
         fun validateEmpty() {
             assertThatThrownBy { calculator.extractContents("") }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage(GlobalException.BLANK_NOT_ALLOWED.message)
+                .hasMessage(GlobalException.BLANK_NOT_ALLOWED.message())
         }
 
         @DisplayName("요소 중 정수가 아닌 값이 있으면 예외이다")
@@ -36,7 +36,7 @@ class AbstractDelimiterTest {
         fun validateIsInteger(invalidInput: String){
             assertThatThrownBy { calculator.extractContents("1;$invalidInput") }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage(GlobalException.INTEGER_VALUE_NEEDED.message)
+                .hasMessage(GlobalException.INTEGER_VALUE_NEEDED.message())
         }
 
         @DisplayName("요소 중 양의 정수가 아닌 값이 있으면 예외이다")
@@ -45,7 +45,7 @@ class AbstractDelimiterTest {
         fun validateIsPositiveInteger(invalidInput: String){
             assertThatThrownBy { calculator.extractContents("1;$invalidInput") }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage(GlobalException.NEGATIVE_INTEGER_NOT_ALLOWED.message)
+                .hasMessage(GlobalException.NEGATIVE_INTEGER_NOT_ALLOWED.message())
         }
     }
 }

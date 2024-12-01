@@ -10,6 +10,6 @@ class DelimiterFactory {
 
     fun getInstance(input: String): Delimiter {
         return delimiters.find { it.applicable(input) }
-            ?: throw IllegalArgumentException(GlobalException.INVALID_DELIMITER_TYPE.message)
+            ?: throw IllegalArgumentException(GlobalException.INVALID_DELIMITER_TYPE.message())
     }
 }
