@@ -13,8 +13,12 @@ class AbstractDelimiterTest {
     @Nested
     inner class ValidationTest {
         private val calculator: AbstractDelimiter = object : AbstractDelimiter() {
-            override fun split(given: String): List<String> {
-                return given.split(";") // 테스트용 스텁
+            override fun split(input: String): List<String> {
+                return input.split(";") // 테스트용 스텁
+            }
+
+            override fun applicable(input: String): Boolean {
+                return true
             }
         }
 

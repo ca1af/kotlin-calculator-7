@@ -5,7 +5,11 @@ class DefaultDelimiter : AbstractDelimiter(){
         val DELIMITER = "[,;]".toRegex()
     }
 
-    override fun split(given: String): List<String> {
-        return given.split(DELIMITER)
+    override fun split(input: String): List<String> {
+        return input.split(DELIMITER)
+    }
+
+    override fun applicable(input: String): Boolean {
+        return input.contains(DELIMITER)
     }
 }

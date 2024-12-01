@@ -7,6 +7,8 @@ abstract class AbstractDelimiter :Delimiter {
         require(input.isNotBlank()) { GlobalException.BLANK_NOT_ALLOWED.message}
     }
 
+    internal abstract fun split(input: String) : List<String>
+
     private fun validate(contents: List<String>) {
         require(contents.all { it.toIntOrNull() != null }) {
             GlobalException.INTEGER_VALUE_NEEDED.message
@@ -17,10 +19,18 @@ abstract class AbstractDelimiter :Delimiter {
         }
     }
 
-    override fun extractContents(given: String): List<Int> {
-        validate(given)
-        val contentString = split(given)
+    override fun extractContents(input: String): List<Int> {
+        validate(input)
+        val contentString = split(input)
         validate(contentString)
         return contentString.map { it.toInt() }
+    }
+
+    override fun getInstance(input: String): Delimiter {
+        if (applicable(input)){
+            return this
+        }
+
+        throw IllegalArgumentException(GlobalException.INVALID_DELIMITER_TYPE.message)
     }
 }

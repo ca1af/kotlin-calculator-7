@@ -5,4 +5,5 @@ enum class GlobalException(val message: String) {
     INTEGER_VALUE_NEEDED("정수를 입력하라"),
     NEGATIVE_INTEGER_NOT_ALLOWED("음의 정수는 허용하지 않는다."),
     INVALID_CUSTOM_DELIMITER("커스텀 구분자가 부적절하다"),
+    INVALID_DELIMITER_TYPE("구분자가 없다")
 }

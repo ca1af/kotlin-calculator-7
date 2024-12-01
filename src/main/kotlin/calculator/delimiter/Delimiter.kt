@@ -1,6 +1,7 @@
 package calculator.delimiter
 
 interface Delimiter {
-    fun split(given: String): List<String>
-    fun extractContents(given: String): List<Int>
+    fun extractContents(input: String): List<Int>
+    fun applicable(input: String): Boolean
+    fun getInstance(input: String): Delimiter
 }

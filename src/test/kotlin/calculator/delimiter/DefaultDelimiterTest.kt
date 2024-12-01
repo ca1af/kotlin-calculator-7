@@ -12,17 +12,17 @@ class DefaultDelimiterTest {
     @DisplayName("',' 나 ';' 를 이용한 문자열 계산에 성공한다")
     @Test
     fun calculate() {
-        val given = "1,2"
+        val input = "1,2"
         val calculator = DefaultDelimiter()
-        val result = calculator.split(given)
-        assertThat(result).isEqualTo(3)
+        val result = calculator.extractContents(input)
+        assertThat(result).containsExactly(1, 2)
     }
 
     @DisplayName("공백인 문자열이 제공되면 예외가 발생한다.")
     @Test
     fun validateEmpty() {
         val calculator = DefaultDelimiter()
-        assertThatThrownBy { calculator.split("") }
+        assertThatThrownBy { calculator.extractContents("") }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(GlobalException.BLANK_NOT_ALLOWED.message)
     }
@@ -32,7 +32,7 @@ class DefaultDelimiterTest {
     @ValueSource(strings = ["바보", "null", "1.5"])
     fun validateIsInteger(invalidInput: String){
         val calculator = DefaultDelimiter()
-        assertThatThrownBy { calculator.split("1;$invalidInput") }
+        assertThatThrownBy { calculator.extractContents("1;$invalidInput") }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(GlobalException.INTEGER_VALUE_NEEDED.message)
     }
@@ -42,7 +42,7 @@ class DefaultDelimiterTest {
     @ValueSource(strings = ["-1", "-5", "-2"])
     fun validateIsPositiveInteger(invalidInput: String){
         val calculator = DefaultDelimiter()
-        assertThatThrownBy { calculator.split("1;$invalidInput") }
+        assertThatThrownBy { calculator.extractContents("1;$invalidInput") }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(GlobalException.NEGATIVE_INTEGER_NOT_ALLOWED.message)
     }
