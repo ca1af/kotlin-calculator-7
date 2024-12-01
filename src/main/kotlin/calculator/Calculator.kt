@@ -12,6 +12,7 @@ class Calculator {
         return split.sumOf { it.toInt() }
     }
 
+    // 걍 개쓸데없는거 아닌가? Illegal... 던지는게?
     private fun validate(split: List<String>) {
         require(split.all { it.toIntOrNull() != null }) {
             GlobalException.INTEGER_VALUE_NEEDED.message
