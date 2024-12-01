@@ -1,12 +1,14 @@
-package calculator
+package calculator.delimiter
 
-class CustomDelimiter {
+import calculator.GlobalException
+
+class CustomDelimiter : AbstractDelimiter() {
     companion object {
         const val STARTING_POINT = "//"
         const val ENDING_POINT = "\\n"
     }
 
-    fun split(given: String): List<String> {
+    override fun split(given: String): List<String> {
         require(given.startsWith(STARTING_POINT) && given.contains(ENDING_POINT)) {
             GlobalException.INVALID_CUSTOM_DELIMITER.message
         }

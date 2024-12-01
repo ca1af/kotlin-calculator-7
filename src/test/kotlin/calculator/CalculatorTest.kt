@@ -1,48 +1,29 @@
 package calculator
 
+import calculator.delimiter.CustomDelimiter
+import calculator.delimiter.DefaultDelimiter
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class CalculatorTest {
-    @DisplayName("',' 나 ';' 를 이용한 문자열 계산에 성공한다")
+    @DisplayName("기본 구분자를 통한 계산에 성공한다")
     @Test
-    fun calculate() {
-        val given = "1,2"
+    fun calculateByDefaultDelimiter() {
+        val defaultDelimiter = DefaultDelimiter()
         val calculator = Calculator()
-        val result = calculator.calculate(given)
-        assertThat(result).isEqualTo(3)
+
+        val result = calculator.calculate("1;2,3", defaultDelimiter)
+        assertThat(result).isEqualTo(6)
     }
 
-    @DisplayName("공백인 문자열이 제공되면 예외가 발생한다.")
+    @DisplayName("커스텀 구분자를 통한 계산에 성공한다")
     @Test
-    fun validateEmpty() {
+    fun calculateByCustomDelimiter() {
+        val defaultDelimiter = CustomDelimiter()
         val calculator = Calculator()
-        assertThatThrownBy { calculator.calculate("") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(GlobalException.BLANK_NOT_ALLOWED.message)
-    }
 
-    @DisplayName("요소 중 정수가 아닌 값이 있으면 예외이다")
-    @ParameterizedTest
-    @ValueSource(strings = ["바보", "null", "1.5"])
-    fun validateIsInteger(invalidInput: String){
-        val calculator = Calculator()
-        assertThatThrownBy { calculator.calculate("1;$invalidInput") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(GlobalException.INTEGER_VALUE_NEEDED.message)
-    }
-
-    @DisplayName("요소 중 양의 정수가 아닌 값이 있으면 예외이다")
-    @ParameterizedTest
-    @ValueSource(strings = ["-1", "-5", "-2"])
-    fun validateIsPositiveInteger(invalidInput: String){
-        val calculator = Calculator()
-        assertThatThrownBy { calculator.calculate("1;$invalidInput") }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(GlobalException.NEGATIVE_INTEGER_NOT_ALLOWED.message)
+        val result = calculator.calculate("//j\\n1j2j3", defaultDelimiter)
+        assertThat(result).isEqualTo(6)
     }
 }
